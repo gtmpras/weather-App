@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'homepage_screen.dart';
+
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
 
@@ -8,6 +11,20 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
+//creating method to change screen
+  changeScreen(){
+    Future.delayed(Duration(seconds: 5),(){
+      //using getx
+      Get.to(()=>const HomePageScreeen());
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    changeScreen();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +63,7 @@ class _HelpScreenState extends State<HelpScreen> {
               [
                 Padding(padding: EdgeInsets.symmetric(vertical: 85)),
                 ElevatedButton(onPressed: (){
-                
+                  Get.to(()=>HomePageScreeen());
                 },
                  child:Text('Skip',style: TextStyle(
                   fontSize: 20,color: Colors.black
