@@ -12,10 +12,10 @@ class HelpScreen extends StatefulWidget {
 
 class _HelpScreenState extends State<HelpScreen> {
 //creating method to change screen
-  changeScreen(){
-    Future.delayed(Duration(seconds: 5),(){
+  changeScreen() {
+    Future.delayed(Duration(seconds: 5), () {
       //using getx
-      Get.to(()=>const HomePageScreeen());
+      Get.to(() => const HomePageScreeen());
     });
   }
 
@@ -25,6 +25,7 @@ class _HelpScreenState extends State<HelpScreen> {
     changeScreen();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +34,11 @@ class _HelpScreenState extends State<HelpScreen> {
         padding: EdgeInsets.all(25),
         decoration: BoxDecoration(
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(Colors.lightBlueAccent, BlendMode.overlay),
-            image: AssetImage("images/frame.png"),
-            fit: BoxFit.fill
-          ),
+              colorFilter:
+                  ColorFilter.mode(Colors.lightBlueAccent, BlendMode.overlay),
+              image: AssetImage("images/frame.png"),
+              fit: BoxFit.fill),
         ),
-        
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -47,36 +47,42 @@ class _HelpScreenState extends State<HelpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(padding: EdgeInsets.all(25)),
-                  FaIcon(FontAwesomeIcons.cloudSun,color: Colors.cyan,size: 85,),
-                  SizedBox(height: 10,),
-                  Text("We show weather for you..",
-                  style:TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w700,
+                  FaIcon(
+                    FontAwesomeIcons.cloudSun,
                     color: Colors.cyan,
-                  ), 
-                  ),  
+                    size: 85,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "We show weather for you..",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.cyan,
+                    ),
+                  ),
                 ],
               ),
               Column(
-              children: 
-              [
-                Padding(padding: EdgeInsets.symmetric(vertical: 85)),
-                ElevatedButton(onPressed: (){
-                  Get.to(()=>HomePageScreeen());
-                },
-                 child:Text('Skip',style: TextStyle(
-                  fontSize: 20,color: Colors.black
-                 ),),
-                 style:ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 141, 184, 190)
-                 )),
-              ],
-            )
+                children: [
+                  Padding(padding: EdgeInsets.symmetric(vertical: 85)),
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => HomePageScreeen());
+                      },
+                      child: Text(
+                        'Skip',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 141, 184, 190))),
+                ],
+              )
             ],
           ),
         ),
-        
       ),
     );
   }
