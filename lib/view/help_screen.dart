@@ -15,7 +15,7 @@ class _HelpScreenState extends State<HelpScreen> {
   changeScreen() {
     Future.delayed(Duration(seconds: 5), () {
       //using getx
-      Get.to(() => const HomePageScreeen());
+      Get.to(() => const HomePageScreen());
     });
   }
 
@@ -70,7 +70,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   Padding(padding: EdgeInsets.symmetric(vertical: 85)),
                   ElevatedButton(
                       onPressed: () {
-                        Get.to(() => HomePageScreeen());
+                        Get.to(() => HomePageScreen());
                       },
                       child: Text(
                         'Skip',

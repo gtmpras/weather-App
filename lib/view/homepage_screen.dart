@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/model/api.dart';
 import '../model/response_model.dart';
 
-class HomePageScreeen extends StatefulWidget {
-  const HomePageScreeen({Key? key}) : super(key: key);
+class HomePageScreen extends StatefulWidget {
+  const HomePageScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomePageScreeen> createState() => _HomePageScreeenState();
+  State<HomePageScreen> createState() => _HomePageScreenState();
 }
 
-class _HomePageScreeenState extends State<HomePageScreeen> {
-  String noDatatext = "Sorry, we don't have data..";
+class _HomePageScreenState extends State<HomePageScreen> {
+  String noDataText = "Sorry, we don't have data..";
   bool inProgress = false;
   ResponseModel? responseModel;
 
@@ -34,9 +34,7 @@ class _HomePageScreeenState extends State<HomePageScreeen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _buildSearchWidget(),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               if (inProgress)
                 LinearProgressIndicator()
               else if (responseModel != null)
@@ -50,64 +48,71 @@ class _HomePageScreeenState extends State<HomePageScreeen> {
     );
   }
 
-   _buildSearchWidget() {
+  Widget _buildSearchWidget() {
     return SearchBar(
       hintText: "Search location here",
       onSubmitted: (value) {
-        //get data from api
+        // Get data from API
         _getResultFromApi(value);
       },
     );
   }
 
-    
-   _buildResponseWidget() {
-    if(responseModel != null && responseModel!.current != null && responseModel!.location !=null){
-      print("Country selected is: ");
-      print(responseModel!.current!.tempC);
-return Card(
-      elevation: 4,
-      child: Column(
-        children: [
-          Text(responseModel!.current!.tempC.toString(),
-          style: TextStyle(
-            color: Colors.red,
-            fontSize: 32,
-            fontWeight: FontWeight.bold
-          ),),
-          SizedBox(height: 10,),
-          Container(
-            height: 30,
-            width: 60,
-            child: Column(
-              children: [
-                Text('data'),
-              ],
+  Widget _buildResponseWidget() {
+    if (responseModel != null &&
+        responseModel!.current != null &&
+        responseModel!.location != null) {
+      print("Country selected is: ${responseModel!.location!.country}");
+      return Card(
+        elevation: 4,
+        child: Column(
+          children: [
+            Text(
+              responseModel!.current!.tempC.toString(),
+              style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold),
             ),
-          )
-        ],
-      ),
-    );
-    }else{
+            SizedBox(height: 10),
+            Container(
+              height: 30,
+              width: 60,
+              child: Column(
+                children: [
+                  Text('data'),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
       return _noDataWidget();
     }
-    
   }
 
- _noDataWidget() {
-    return Text(noDatatext);
+  Widget _noDataWidget() {
+    return Text(noDataText);
   }
 
-   _getResultFromApi(String location) async {
+  Future<void> _getResultFromApi(String location) async {
     setState(() {
       inProgress = true; // Set progress indicator to show loading
     });
 
     try {
       responseModel = await API.fetchLocation(location);
+      if (responseModel == null) {
+        setState(() {
+          noDataText = "Sorry, data cannot be fetched";
+        });
+      }
     } catch (e) {
-      responseModel = null;
-      noDatatext = "Sorry, data cannot be fetched";
+      print("Error fetching data: $e");
+      setState(() {
+        noDataText = "Sorry, an error occurred while fetching data";
+      });
     } finally {
       setState(() {
         inProgress = false; // Set progress indicator to hide loading
